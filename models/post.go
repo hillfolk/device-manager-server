@@ -2,13 +2,13 @@ package models
 
 import "labix.org/v2/mgo/bson"
 
-const COLLECTION_NAME = "categorys"
+const COLLECTION_NAME = "posts"
 
 type post struct{
-	id:int
-	title:string
-	content:string
-	user:string
-	updated:time
-	created:time	
+	id:int "id"
+	title:string "title"
+	content:string "content"
+	user:string "user"
+	updated:time "updated"
+	created:time	"created
 }
