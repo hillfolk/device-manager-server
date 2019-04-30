@@ -1,5 +1,7 @@
 package models
 
+import "labix.org/v2/mgo/bson"
+
 const COLLECTION_NAME = "builds"
 type build struct {
 	id:int "id"
