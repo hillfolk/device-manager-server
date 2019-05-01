@@ -1,63 +1,66 @@
 package server
 
 import (
-	_"fmt"
 	"net/http"
-	"os"
-	"time"
 	"github.com/labstack/echo"
+	"go.mongodb.org/mongo-driver/mongo"
 )
-func createApp(Client *client,c echo.Context){
- 	
+
+
+func createApp(c echo.Context, client *mongo.Client){
+	
+
+	
 }
 
-func readApp(Client *client,c echo.Context){
+func readApp(c echo.Context, client *mongo.Client){
 }
 
-func updateApp(Client *client,c echo.Context){
+func updateApp(c echo.Context, client *mongo.Client){
 }
 
-func deleteApp(Client *client,c echo.Context){
+func deleteApp(c echo.Context, client *mongo.Client){
 }
 
 
 
 //Version
-func createVersion(Client *client, c echo.Context){
+func createVersion(c echo.Context, client *mongo.Client){
 	
 }
 
 
-func updateVersion(Client *client, c echo.Context){
+func updateVersion(c echo.Context, client *mongo.Client){
 	
 }
 
 
-func delteVersion(Client *client, c echo.Context){
+func delteVersion(c echo.Context, client *mongo.Client){
 
 }
 
 
-func readVersion(Client *client, c echo.Context){
+func readVersion(c echo.Context, client *mongo.Client){
 
 }
 
 
 //Post
 
-func createPosts(Client *client,c echo.Context){
-}
-func readPosts(Client *client,c echo.Context){
-	
+func createPosts(c echo.Context, client *mongo.Client){
 }
 
-
-func updatePosts(Client *client,c echo.Context){
-
-
+func readPosts(c echo.Context)error{
+		return c.String(http.StatusOK, "readPosts")
 }
 
 
-func deletePosts(Client *client,c echo.Context){
+func updatePosts(c echo.Context, client *mongo.Client){
+
+
+}
+
+
+func deletePosts(c echo.Context, client *mongo.Client){
 
 }
