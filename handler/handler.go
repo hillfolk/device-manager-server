@@ -1,4 +1,4 @@
-package server
+package handler
 
 import (
 	"net/http"
@@ -6,6 +6,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type (
+Handler struct {
+		client *mgo.Client
+	}
+)
 
 func createApp(c echo.Context, client *mongo.Client){
 	

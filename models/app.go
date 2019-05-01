@@ -3,6 +3,7 @@ package models
 import "labix.org/v2/mgo/bson"
 
 const COLLECTION_NAME = "apps"
+
 type app struct {
 	id:string "id"
 	category:category "category"
