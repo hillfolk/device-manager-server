@@ -16,8 +16,9 @@ package cmd
 
 import (
 	"fmt"
-
+	viper "github.com/spf13/viper"
 	"github.com/spf13/cobra"
+	server "github.com/hillfolk/app-manager-server/server"
 )
 
 // runCmd represents the run command
@@ -31,12 +32,18 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("run called")
+		port, _:= cmd.Flags().GetString("port")
+		if port == "" {
+			port = "8282"
+		}
+		fmt.Println("eurekalog http server starting.....")
+		server.RunServer(":"+port)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(runCmd)
+	runCmd.Flags().StringP("port", "p", viper.GetString("APP_SERVER_PORT"), "set server port")
 
 	// Here you will define your flags and configuration settings.
 
