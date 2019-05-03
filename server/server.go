@@ -8,6 +8,7 @@ import (
 	"net/http"
 	_"os"
 	"time"
+	"github.com/hillfolk/app-manager-server/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -23,6 +24,8 @@ func RunServer(port string){
 	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	_ = client.Connect(ctx)
+	
+	DB := client.Database("ams")
 
 	
 	// Server header
@@ -31,8 +34,12 @@ func RunServer(port string){
 	e.GET("/",func(c echo.Context) error {
 		return c.String(http.StatusOK, "app-manager-server")
 	})
+
+	h := &handler.Handler{DB:DB}
+
 	/* Post */
-	e.GET("/posts",readPosts)
+	e.POST("/signup",h.Signup)
+	e.POST("/login",h.Login)
 	
 	
 	

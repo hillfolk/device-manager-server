@@ -24,19 +24,14 @@ import (
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Run App Manager Server",
+	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		port, _:= cmd.Flags().GetString("port")
 		if port == "" {
 			port = "8282"
 		}
-		fmt.Println("eurekalog http server starting.....")
+		fmt.Println("app manager server starting.....")
 		server.RunServer(":"+port)
 	},
 }
