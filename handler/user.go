@@ -3,12 +3,37 @@ package handler
 import (
 	"net/http"
 	_ "time"
+	"strconv"
 	"context"
+	"log"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
-	_ "go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson"
 	model "github.com/hillfolk/app-manager-server/model"
 )
+
+func (h *Handler) creatUser(c echo.Context) error {
+	
+	return nil
+}
+
+func (h *Handler) readUser(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	filter := bson.D{{"id", id}}
+	coll := h.DB.Collection("user")
+	var u model.User
+	err := coll.FindOne(
+		context.Background(),
+		filter,).Decode(&u)
+	
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	
+	
+	return c.JSON(http.StatusOK, u)
+}
 
 
 func (h *Handler) Signup(c echo.Context) (err error) {
@@ -40,14 +65,14 @@ func (h *Handler) Login(c echo.Context) (err error) {
 
 	// Find user
 
-	defer DB.Close()
-	if err = db.
-		Find(bson.M{"email": u.Email, "password": u.Password}).One(u); err != nil {
+
+	if cur,err = h.DB.collection(user).Find(bson.M{"email": u.Email, "password": u.Password}).One(u); err != nil {
 		if err == mgo.ErrNotFound {
 			return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid email or password"}
 		}
 		return
 	}
+
 
 	//-----
 	// JWT

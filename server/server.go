@@ -25,8 +25,9 @@ func RunServer(port string){
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	_ = client.Connect(ctx)
 	
-	DB := client.Database("ams")
-
+	db := client.Database("ams")
+	
+	defer client.Disconnect(ctx)
 	
 	// Server header
 	e.Use(middleware.Logger())
@@ -35,7 +36,8 @@ func RunServer(port string){
 		return c.String(http.StatusOK, "app-manager-server")
 	})
 
-	h := &handler.Handler{DB:DB}
+	h := &handler.Handler{DB: db}
+
 
 	/* Post */
 	e.POST("/signup",h.Signup)
