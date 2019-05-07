@@ -31,7 +31,7 @@ var runCmd = &cobra.Command{
 		if port == "" {
 			port = "8282"
 		}
-		fmt.Println("app manager server starting.....")
+		fmt.Println("device manager server starting.....")
 		server.RunServer(":"+port)
 	},
 }

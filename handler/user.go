@@ -2,13 +2,15 @@ package handler
 
 import (
 	"net/http"
-	_ "time"
+	"time"
 	"strconv"
 	"context"
 	"log"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/rs/xid"
 	"github.com/labstack/echo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	model "github.com/hillfolk/app-manager-server/model"
 )
 
@@ -39,6 +41,7 @@ func (h *Handler) readUser(c echo.Context) error {
 func (h *Handler) Signup(c echo.Context) (err error) {
 	
 	u := &model.User{}
+
 	if err = c.Bind(u); err!= nil {
 		return
 	}
@@ -48,8 +51,11 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid email or password"}		
 	}
-
+	
+	u.Id = xid.New().String()
+	u.Created = time.Now()
 	_,err = h.DB.Collection("user").InsertOne(context.Background(),u)
+	
 	return c.JSON(http.StatusCreated,u)
 	
 }
@@ -57,17 +63,18 @@ func (h *Handler) Signup(c echo.Context) (err error) {
 
 func (h *Handler) Login(c echo.Context) (err error) {
 	// Bind
-	/*
+	
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {
-		return
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid value"}
 	}
 
 	// Find user
 
 
-	if cur,err = h.DB.collection(user).Find(bson.M{"email": u.Email, "password": u.Password}).One(u); err != nil {
-		if err == mgo.ErrNotFound {
+	if err = h.DB.Collection("user").FindOne(context.Background(),bson.M{"email": u.Email, "password": u.Password},).Decode(&u); err != nil {
+		
+		if err == mongo.ErrNilDocument {
 			return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid email or password"}
 		}
 		return
@@ -83,7 +90,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 
 	// Set claims
 	claims := token.Claims.(jwt.MapClaims)
-	claims["id"] = u.ID
+	claims["id"] = u.Id
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// Generate encoded token and send it as response
@@ -93,8 +100,8 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	}
 
 	u.Password = "" // Don't send password
-*/
-	return c.JSON(http.StatusOK, "login")
+
+	return c.JSON(http.StatusOK, u.Token)
 }
 
 

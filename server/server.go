@@ -31,6 +31,16 @@ func RunServer(port string){
 	
 	// Server header
 	e.Use(middleware.Logger())
+	e.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte(handler.Key),
+		Skipper: func(c echo.Context) bool {
+			// Skip authentication for and signup login requests
+			if c.Path() == "/login" || c.Path() == "/signup" {
+				return true
+			}
+			return false
+		},
+	}))
 	e.Use(middleware.Recover())
 	e.GET("/",func(c echo.Context) error {
 		return c.String(http.StatusOK, "device-manager-server")
@@ -42,6 +52,7 @@ func RunServer(port string){
 	/* Post */
 	e.POST("/signup",h.Signup)
 	e.POST("/login",h.Login)
+	e.POST("/posts", h.CreatePost)
 	
 	
 	
