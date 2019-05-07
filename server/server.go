@@ -33,7 +33,7 @@ func RunServer(port string){
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.GET("/",func(c echo.Context) error {
-		return c.String(http.StatusOK, "app-manager-server")
+		return c.String(http.StatusOK, "device-manager-server")
 	})
 
 	h := &handler.Handler{DB: db}
