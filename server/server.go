@@ -56,6 +56,11 @@ func RunServer(port string){
 	e.GET("/posts", h.ReadPosts)
 	e.GET("/posts/:id",h.ReadPost)
 
+	e.POST("/devices",h.CreateDevice)
+	e.PUT("/devices/:id",h.UpdateDevice)
+	e.GET("/devices",h.ReadDevices)
+	e.GET("/devices/:id",h.ReadDevice)
+
 	
 	
 	
