@@ -23,10 +23,10 @@ import (
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Display App Manager Server Current Version",
+	Short: "Display Device Manager Server Current Version",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("app manager server v0.0.0.1")
+		fmt.Println("device manager server v0.0.0.1")
 	},
 }
 

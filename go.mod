@@ -1,4 +1,4 @@
-module github.com/hillfolk/app-manager-server
+module github.com/hillfolk/device-manager-server
 
 go 1.12
 
@@ -11,6 +11,7 @@ require (
 	github.com/mattn/go-colorable v0.1.1 // indirect
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/rs/xid v1.2.1
 	github.com/spf13/cobra v0.0.3
 	github.com/spf13/viper v1.3.2
 	github.com/valyala/fasttemplate v1.0.1 // indirect
@@ -18,5 +19,4 @@ require (
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.0.1
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
-	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )
