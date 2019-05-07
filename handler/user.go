@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 	"time"
-	"strconv"
 	"context"
 	"log"
 	"github.com/dgrijalva/jwt-go"
@@ -11,7 +10,7 @@ import (
 	"github.com/labstack/echo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	model "github.com/hillfolk/app-manager-server/model"
+	model "github.com/hillfolk/device-manager-server/model"
 )
 
 func (h *Handler) creatUser(c echo.Context) error {
@@ -20,7 +19,7 @@ func (h *Handler) creatUser(c echo.Context) error {
 }
 
 func (h *Handler) readUser(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id := c.Param("id")
 	filter := bson.D{{"id", id}}
 	coll := h.DB.Collection("user")
 	var u model.User

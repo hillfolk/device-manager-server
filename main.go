@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/hillfolk/app-manager-server/cmd"
+import "github.com/hillfolk/device-manager-server/cmd"
 
 func main() {
 	cmd.Execute()

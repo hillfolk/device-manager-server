@@ -1,4 +1,4 @@
-module github.com/hillfolk/app-manager-server
+module github.com/hillfolk/device-manager-server
 
 go 1.12
 
@@ -19,5 +19,4 @@ require (
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.0.1
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
-	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )

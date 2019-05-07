@@ -18,13 +18,13 @@ import (
 	"fmt"
 	viper "github.com/spf13/viper"
 	"github.com/spf13/cobra"
-	server "github.com/hillfolk/app-manager-server/server"
+	server "github.com/hillfolk/device-manager-server/server"
 )
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Run App Manager Server",
+	Short: "Run Device Manager Server",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		port, _:= cmd.Flags().GetString("port")
@@ -38,7 +38,7 @@ var runCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(runCmd)
-	runCmd.Flags().StringP("port", "p", viper.GetString("APP_SERVER_PORT"), "set server port")
+	runCmd.Flags().StringP("port", "p", viper.GetString("DEVICE_SERVER_PORT"), "set server port")
 
 	// Here you will define your flags and configuration settings.
 

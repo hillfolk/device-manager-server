@@ -1,1 +1,16 @@
-README
+#+TITLE: README
+
+** Device Manager Server
+
+** Description
+   IoT Remote Device Manager
+
+*** Description
+   * Remote Device Ip Management
+
+
+** Install 
+
+** Usage
+
+** License

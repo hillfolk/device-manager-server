@@ -8,7 +8,7 @@ import (
 	"net/http"
 	_"os"
 	"time"
-	"github.com/hillfolk/app-manager-server/handler"
+	"github.com/hillfolk/device-manager-server/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -25,7 +25,7 @@ func RunServer(port string){
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	_ = client.Connect(ctx)
 	
-	db := client.Database("ams")
+	db := client.Database("dms")
 	
 	defer client.Disconnect(ctx)
 	
@@ -53,7 +53,9 @@ func RunServer(port string){
 	e.POST("/signup",h.Signup)
 	e.POST("/login",h.Login)
 	e.POST("/posts", h.CreatePost)
-	
+	e.GET("/posts", h.ReadPosts)
+	e.GET("/posts/:id",h.ReadPost)
+
 	
 	
 	
