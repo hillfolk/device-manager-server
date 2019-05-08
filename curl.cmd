@@ -18,7 +18,7 @@ curl \
 
 curl \
   -X POST \
-  http://localhost:8282/posts \
+  http://localhost:8282/devices \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTc0OTAxMjIsImlkIjoiYmo4bjRjb3Q4NzQyb21uZWpqZDAifQ.hlYfQ-u-5ATeYLe8xy9lDQaPbEuVb-0iI5qPRJj1ALU" \
   -H "Content-Type: application/json" \
   -d '{"name":"device1","name":"client1","ipv4":"192.168.0.1","port":"5000"}'

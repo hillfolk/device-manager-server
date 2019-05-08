@@ -19,7 +19,7 @@ func (h *Handler) CreatePost(c echo.Context) (err error) {
 	p := &model.Post{}
 
 	if err = c.Bind(p); err!= nil {
-		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid value"} 
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unauthorized"} 
 	}
 
 	p.Id = xid.New().String()	
