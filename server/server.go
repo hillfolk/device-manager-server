@@ -62,6 +62,7 @@ func RunServer(port string){
 	e.PUT("/devices/:id",h.UpdateDevice)
 	e.GET("/devices",h.ReadDevices)
 	e.GET("/devices/:id",h.ReadDevice)
+	e.DELETE("/devices/:id",h.DeleteDevice)
 
 	e.Logger.Fatal(e.Start(port))
 	

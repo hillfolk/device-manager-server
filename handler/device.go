@@ -144,7 +144,7 @@ func (h *Handler) DeleteDevice(c echo.Context) (err error){
 	if err != nil {
 		return err
 	}
- 	return c.JSON(http.StatusOK,nil)
+ 	return c.JSON(http.StatusOK,id)
 }
 
 
