@@ -19,7 +19,7 @@ func (h *Handler) CreateDevice(c echo.Context) (err error){
 	
 	
 	if err = c.Bind(d); err!= nil {
-		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unauthorized"} 
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err} 
 	}
 
 	d.Id = xid.New().String()	
@@ -107,7 +107,7 @@ func (h *Handler) UpdateDevice(c echo.Context) (err error){
 	bd := &model.Device{}
 	ud := &model.Device{}
 	if err = c.Bind(ud); err!= nil {
-		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unauthorized"} 
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err} 
 	}
 
 	filter := bson.D{{"id", id}}
@@ -136,9 +136,15 @@ func (h *Handler) UpdateDevice(c echo.Context) (err error){
 
 
 func (h *Handler) DeleteDevice(c echo.Context) (err error){
+	id := c.Param("id")
+	// TODO:Resource Role Check
 
 	
-	return nil
+	_, err = h.DB.Collection("device").DeleteOne(context.TODO(), bson.D{{"id",id}})
+	if err != nil {
+		return err
+	}
+ 	return c.JSON(http.StatusOK,nil)
 }
 
 

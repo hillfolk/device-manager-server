@@ -49,21 +49,20 @@ func RunServer(port string){
 	h := &handler.Handler{DB: db}
 
 
-	/* Post */
+	/* User */
 	e.POST("/signup",h.Signup)
 	e.POST("/login",h.Login)
+	/* Post */
 	e.POST("/posts", h.CreatePost)
 	e.GET("/posts", h.ReadPosts)
 	e.GET("/posts/:id",h.ReadPost)
-
+	
+	/* Device */
 	e.POST("/devices",h.CreateDevice)
 	e.PUT("/devices/:id",h.UpdateDevice)
 	e.GET("/devices",h.ReadDevices)
 	e.GET("/devices/:id",h.ReadDevice)
 
-	
-	
-	
 	e.Logger.Fatal(e.Start(port))
 	
 }
