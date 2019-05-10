@@ -4,8 +4,11 @@ import "time"
 
 type App struct {
 	Name string `json:"name" bson:"name"`
-	Version string 'json: "version" bson:"version"'
-	UpdateDate time.Time 'json:"updatedate" bson:"updatedate"'
+	Version string `json:"version" bson:"version"`
+	LastUpdate time.Time `json:"lastUpdate" bson:"lastUpdate"`
+	TargetVersion string  `json:"target_version" bson:"target_version"`
+	UpdateRequest string  `json:"update_requst" bson:"update_request"`
+	
 }
 
 type Device struct {
@@ -13,7 +16,7 @@ type Device struct {
 	Name     string        `json:"name" bson:"name"`
 	Ipv4      string        `json:"ipv4" bson:"ipv4"`
 	VncPort      string        `json:"vnc_port" bson:"vnc_port"`
-	Apps []app `json:"apps" bson:"apps"`
+	Apps []App `json:"apps" bson:"apps"`
 	Updated   time.Time           `json:"update" bson:"update"` 
 	Created   time.Time          `json:"created" bson:"created"` 
 }
