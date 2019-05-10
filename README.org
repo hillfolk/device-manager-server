@@ -5,9 +5,13 @@
 ** Description
    IoT Remote Device Manager
 
-*** Description
-   * Remote Device Ip Management
-
+*** 세부기능
+   * 원격 장비 IP 관리
+   * VNC 연결 주소 제공
+   * 설치 어플리케이션 버전 관리
+   * 설치 어플리케이션 상태 모니터링
+   * 원격 업데이트 요청
+   * 사용자 관리 기능 제공
 
 ** Install 
 
