@@ -65,6 +65,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	
 	u := new(model.User)
 	if err = c.Bind(u); err != nil {
+		log.Print(c)
 		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid value"}
 	}
 
@@ -100,7 +101,7 @@ func (h *Handler) Login(c echo.Context) (err error) {
 
 	u.Password = "" // Don't send password
 
-	return c.JSON(http.StatusOK, u.Token)
+	return c.JSON(http.StatusOK, u)
 }
 
 

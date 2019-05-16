@@ -7,7 +7,7 @@ type App struct {
 	Version string `json:"version" bson:"version"`
 	LastUpdate time.Time `json:"lastUpdate" bson:"lastUpdate"`
 	TargetVersion string  `json:"target_version" bson:"target_version"`
-	UpdateRequest string  `json:"update_requst" bson:"update_request"`
+	UpdateRequest bool  `json:"update_requst" bson:"update_request"`
 	
 }
 
