@@ -52,8 +52,10 @@ func RunServer(port string){
 	/* User */
 	e.POST("/signup",h.Signup)
 	e.POST("/login",h.Login)
+	
 	/* Post */
 	e.POST("/posts", h.CreatePost)
+	e.PUT("/posts/:id",h.UpdatePost)
 	e.GET("/posts", h.ReadPosts)
 	e.GET("/posts/:id",h.ReadPost)
 	
