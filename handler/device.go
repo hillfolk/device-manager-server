@@ -13,6 +13,36 @@ import (
 	model "github.com/hillfolk/device-manager-server/model"
 )
 
+func (h *Handler) RegClientDevice(c echo.Context) (err error){
+	d := &model.Device{}
+	
+	
+	if err = c.Bind(d); err!= nil {
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err} 
+	}
+
+	d.Id = xid.New().String()
+	d.Owner = "Client"
+	d.Created  = time.Now()
+	d.Updated = d.Created
+
+	if d.Name == "" || d.Id == "" {
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid field"}		
+	}
+
+	resultOne,err := h.DB.Collection("device").InsertOne(context.Background(),d)
+	
+	err = h.DB.Collection("device").FindOne(
+			context.Background(),
+			bson.D{{"id",resultOne.InsertedID}},
+	).Decode(&d)
+	
+	return c.JSON(http.StatusCreated,d)
+}
+
+
+
+
 func (h *Handler) CreateDevice(c echo.Context) (err error){
 
 	d := &model.Device{}
@@ -26,7 +56,7 @@ func (h *Handler) CreateDevice(c echo.Context) (err error){
 	d.Created  = time.Now()
 	d.Updated = d.Created
 
-	if d.Name == "" || d.Id == "" {
+	if d.Name == "" || d.Id == "" || d.Owner == "" {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid field"}		
 	}
 
@@ -100,6 +130,41 @@ func (h *Handler) ReadDevice(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK,d)
 }
 
+func (h *Handler) UpdateClientDevice(c echo.Context) (err error){
+
+
+	bd := &model.Device{}
+	ud := &model.Device{}
+	if err = c.Bind(ud); err!= nil {
+		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err} 
+	}
+
+
+	filter := bson.D{{"id", ud.Id}}
+
+	err = h.DB.Collection("device").FindOne(
+		context.Background(),
+		filter,).Decode(&bd)
+	if err != nil {
+		log.Fatal(err)
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Don't Have Resource"} 
+	}
+
+	ud.Created = bd.Created
+	ud.Updated = time.Now()
+	update := bson.D{
+		{"$set",ud},
+	}
+
+	_, err = h.DB.Collection("device").UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid field"}
+	}
+	
+	return c.JSON(http.StatusOK,ud)
+}
+
 func (h *Handler) UpdateDevice(c echo.Context) (err error){
 
 	
@@ -108,6 +173,10 @@ func (h *Handler) UpdateDevice(c echo.Context) (err error){
 	ud := &model.Device{}
 	if err = c.Bind(ud); err!= nil {
 		return &echo.HTTPError{Code: http.StatusUnauthorized, Message: err} 
+	}
+
+	if id == "" {
+			return &echo.HTTPError{Code: http.StatusUnauthorized, Message:"Dont Have Id"} 
 	}
 
 	filter := bson.D{{"id", id}}
@@ -128,7 +197,8 @@ func (h *Handler) UpdateDevice(c echo.Context) (err error){
 
 	_, err = h.DB.Collection("device").UpdateOne(context.TODO(), filter, update)
 	if err != nil {
-		log.Fatal(err)
+
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid field"}
 	}
 	
 	return c.JSON(http.StatusOK,ud)
@@ -142,7 +212,7 @@ func (h *Handler) DeleteDevice(c echo.Context) (err error){
 	
 	_, err = h.DB.Collection("device").DeleteOne(context.TODO(), bson.D{{"id",id}})
 	if err != nil {
-		return err
+		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "invalid field"}
 	}
  	return c.JSON(http.StatusOK,id)
 }

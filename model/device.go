@@ -17,6 +17,7 @@ type Device struct {
 	Ipv4      string        `json:"ipv4" bson:"ipv4"`
 	VncPort      string        `json:"vnc_port" bson:"vnc_port"`
 	Apps []App `json:"apps" bson:"apps"`
+	Owner string `json:"owner" bson:"owner"` 
 	Updated   time.Time           `json:"update" bson:"update"` 
 	Created   time.Time          `json:"created" bson:"created"` 
 }

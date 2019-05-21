@@ -18,4 +18,5 @@ import "github.com/hillfolk/device-manager-server/cmd"
 
 func main() {
 	cmd.Execute()
+	
 }

@@ -14,7 +14,6 @@ import (
 )
 
 
-
 func (h *Handler) CreatePost(c echo.Context) (err error) {
 	p := &model.Post{}
 
@@ -55,10 +54,12 @@ func (h *Handler) ReadPosts(c echo.Context) (err error) {
 	findOptions := options.Find()
 	findOptions.SetLimit(int64(limit))
 
+
 	skip := int64((page-1) * limit)
 	findOptions.SetSkip(skip)
 	
 	posts := []*model.Post{}
+
 
 	cur, err := h.DB.Collection("post").Find(
 		context.Background(),bson.D{},findOptions)
@@ -116,11 +117,12 @@ func (h *Handler) UpdatePost(c echo.Context) (err error) {
 	p := &model.Post{}
 
 	filter := bson.D{{"id", id}}
+	
 
 	err = h.DB.Collection("post").FindOne(
 		context.Background(),
 		filter,).Decode(&p)
-	
+
 	if err != nil {
 		log.Fatal(err)
 		// TODO:Error response by case
@@ -128,11 +130,12 @@ func (h *Handler) UpdatePost(c echo.Context) (err error) {
 
 	p.Title = up.Title
 	p.Content = up.Content
-	p.Updated := time.Now()
+	p.Updated = time.Now()
 
 	update := bson.D{
 		{"$set",up},
 	}
+
 
 	_, err = h.DB.Collection("posts").UpdateOne(context.TODO(), filter, update)
 	if err != nil {

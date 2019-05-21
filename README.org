@@ -1,7 +1,6 @@
-#+TITLE: README
-
-** Device Manager Server
-
+#+show:all
+#+TITLE: IoT Remote Device Manager
+   
 ** Description
    IoT Remote Device Manager
 
@@ -13,7 +12,11 @@
    * 원격 업데이트 요청
    * 사용자 관리 기능 제공
 
-** Install 
+  
+** Docker
+   - Run
+     docker run -t -i --rm -p 8080:8080 -v /data:/docker/bin/data device-manager-server:latest
+
 
 ** Usage
 
