@@ -18,11 +18,11 @@ import (
 )
 
 
-func RunServer(port string){
+func RunServer(port,db_url string){
 	e := echo.New()
 	e.Debug = false
 	// Create Mongodb Connection
-	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://"+db_url))
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	_ = client.Connect(ctx)
 	
