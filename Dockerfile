@@ -3,7 +3,7 @@ ENV SRC=/go/src/
 ENV GO111MODULE=on
 RUN mkdir -p /go/src/
 WORKDIR /go/src/github.com/hillfolk/device-manager-server
-RUN git clone -b master --single-branch https://github.com/hillfolk/eurekalog-http-server.git /go/src/github.com/hillfolk/device-manager-server && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+RUN git clone -b master --single-branch https://github.com/hillfolk/device-manager-server.git /go/src/github.com/hillfolk/device-manager-server && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 go build -o bin/device-manager-server
 
 
