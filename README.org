@@ -15,7 +15,7 @@
   
 ** Docker
    - Build
-     docker build --tag device-manager-server:1.0.0 .
+     docker build --tag hillfolk/device-manager-server:1.0.0 .
 
    - Run
      docker run -t -i --rm -p 8080:8080 -v /data:/docker/bin/data device-manager-server:latest
