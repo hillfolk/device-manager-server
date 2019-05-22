@@ -1,3 +1,4 @@
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -59,4 +60,6 @@ flycheck_*.el
 # network security
 /network-security.data
 
-app-manager-server
+device-manager-server
+*.log
+*.idea/

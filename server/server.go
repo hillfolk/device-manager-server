@@ -3,10 +3,11 @@ package server
 
 import (
 	"context"
-	_"fmt"
 	_"io"
 	"net/http"
+	_"regexp"
 	_"os"
+	_"log"
 	"time"
 	"github.com/hillfolk/device-manager-server/handler"
 	"github.com/labstack/echo"
@@ -19,14 +20,14 @@ import (
 
 func RunServer(port string){
 	e := echo.New()
-	e.Debug = true
+	e.Debug = false
 	// Create Mongodb Connection
 	client, _ := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 	_ = client.Connect(ctx)
 	
 	db := client.Database("dms")
-	
+
 	defer client.Disconnect(ctx)
 	
 	// Server header
@@ -35,9 +36,17 @@ func RunServer(port string){
 		SigningKey: []byte(handler.Key),
 		Skipper: func(c echo.Context) bool {
 			// Skip authentication for and signup login requests
-			if c.Path() == "/login" || c.Path() == "/signup" {
+			if c.Path() == "/"{
 				return true
 			}
+			if c.Path() == "/login" || c.Path() == "/signup" {
+
+				return true
+			}
+			if c.Path() == "/devices/reg" || c.Path() == "/devices/update" {	
+				return true
+			}
+
 			return false
 		},
 	}))
@@ -52,19 +61,24 @@ func RunServer(port string){
 	/* User */
 	e.POST("/signup",h.Signup)
 	e.POST("/login",h.Login)
+	
 	/* Post */
 	e.POST("/posts", h.CreatePost)
+	e.PUT("/posts/:id",h.UpdatePost)
 	e.GET("/posts", h.ReadPosts)
 	e.GET("/posts/:id",h.ReadPost)
 	
 	/* Device */
 	e.POST("/devices",h.CreateDevice)
+	
+	e.POST("/devices/reg",h.RegClientDevice)
+	e.PUT("/devices/update",h.UpdateClientDevice)
+	
 	e.PUT("/devices/:id",h.UpdateDevice)
 	e.GET("/devices",h.ReadDevices)
 	e.GET("/devices/:id",h.ReadDevice)
 	e.DELETE("/devices/:id",h.DeleteDevice)
 
 	e.Logger.Fatal(e.Start(port))
-	
 }
 
