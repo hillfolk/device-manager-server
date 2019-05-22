@@ -31,14 +31,21 @@ var runCmd = &cobra.Command{
 		if port == "" {
 			port = "8282"
 		}
+		db,_:= cmd.Flags().GetString("db")
+		if db == "" {
+			db = "localhost:27017"
+		}
+	
+		
 		fmt.Println("device manager server starting.....")
-		server.RunServer(":"+port)
+		server.RunServer(":"+port,db)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(runCmd)
 	runCmd.Flags().StringP("port", "p", viper.GetString("DEVICE_SERVER_PORT"), "set server port")
+	runCmd.Flags().StringP("db", "d", viper.GetString("DEVICE_SERVER_DATABASE"), "set server database")
 
 	// Here you will define your flags and configuration settings.
 
