@@ -12,5 +12,5 @@ ENV WORK_DIR=/docker/bin
 WORKDIR $WORK_DIR
 RUN mkdir -p ./data/
 COPY --from=goimage /go/src/github.com/hillfolk/device-manager-server/bin/ ./
-ENTRYPOINT /docker/bin/device-mamanger-server server --port=8080 
+ENTRYPOINT /docker/bin/device-mamanger-server run --port=8080 
 EXPOSE 8080
