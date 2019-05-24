@@ -33,7 +33,7 @@ var runCmd = &cobra.Command{
 		}
 		db,_:= cmd.Flags().GetString("db")
 		if db == "" {
-			db = "localhost:27017"
+			db = "mongo:27017"
 		}
 	
 		
